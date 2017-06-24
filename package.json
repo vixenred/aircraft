@@ -1,0 +1,29 @@
+{
+  "name": "all-bet-zbs",
+  "version": "0.0.1",
+  "author": "Ruslan & Magnat",
+  "description": "Allbet zbs",
+  "private": true,
+  "license": "ISC",
+  "scripts": {
+    "deploy": "node deploy.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://magnat@work.ghor.com/rahmanoid/allbet-zbs.git"
+  },
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "debug": "2.6.8",
+    "express": "4.15.3",
+    "morgan": "1.8.2",
+    "serve-favicon": "^2.4.3"
+  },
+  "devDependencies": {
+    "eslint": "3.19.0"
+  },
+  "engines": {
+    "node": ">=6.10.2"
+  }
+}
