@@ -1,8 +1,8 @@
 {
-  "name": "all-bet-zbs",
+  "name": "aircraft",
   "version": "0.0.1",
-  "author": "Ruslan & Magnat",
-  "description": "Allbet zbs",
+  "author": "Vixenred",
+  "description": "Aircraft",
   "private": true,
   "license": "ISC",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://magnat@work.ghor.com/rahmanoid/allbet-zbs.git"
+    "url": "git@github.com:vixenred/aircraft.git"
   },
   "dependencies": {
     "body-parser": "1.17.2",
