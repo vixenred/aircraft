@@ -4,12 +4,11 @@
 let game = null;
 let turret = null;
 let sight = null;
-let rocket = null;
-let plane = null;
 let rocketsCollisionGroup = null;
 let planesCollisionGroup = null;
 let planes = null;
 let rockets = null;
+let explosions = null;
 
 
 function preload()
@@ -22,17 +21,37 @@ function preload()
     game.load.image('rocket3', 'assets/images/Rocket3.png');
     game.load.image('rocket4', 'assets/images/Rocket4.png');
     game.load.image('plane', 'assets/images/BluePlane.png');
+    game.load.spritesheet('explode', 'assets/images/explode.png', 128, 128);
 }
 
-function hitPlane(body1, body2)
+function setupExplosion (explosion)
 {
-    body1.sprite.kill();
-    body2.sprite.kill();
+    explosion.anchor.x = 0.5;
+    explosion.anchor.y = 0.5;
+    explosion.animations.add('explode');
+}
+
+function explode (x, y, scale)
+{
+    let explosion = explosions.getFirstExists(false);
+
+    explosion.scale.setTo(scale);
+    explosion.reset(x, y);
+    explosion.play('explode', 30, false, true);
+}
+
+function hitPlane(rocketBody, planeBody)
+{
+    rocketBody.sprite.kill();
+    planeBody.sprite.kill();
+    explode(rocketBody.x, rocketBody.y, 0.3);
+    explode(planeBody.x, planeBody.y, 1);
 }
 
 function onTap()
 {
-    rocket = rockets.create(turret.x, turret.y, 'rocket');
+    let rocket = rockets.create(turret.x, turret.y, 'rocket');
+
     game.physics.p2.enable(rocket, true);
     rocket.body.setRectangle(20, 60);
     rocket.body.setCollisionGroup(rocketsCollisionGroup);
@@ -52,7 +71,8 @@ function onTap()
 
 function spawn()
 {
-    plane = planes.create(game.width * 0.1, game.height * 0.5, 'plane');
+    let plane = planes.create(game.width * 0.1, game.height * 0.5, 'plane');
+
     game.physics.p2.enable(plane, true);
     plane.body.setRectangle(100, 40);
     plane.body.setCollisionGroup(planesCollisionGroup);
@@ -68,6 +88,7 @@ function spawn()
     plane.body.collideWorldBounds = false;
     plane.body.velocity.x = speed * Math.cos(angle);
     plane.body.velocity.y = speed * Math.sin(angle);
+
 }
 
 
@@ -88,6 +109,9 @@ function create()
     planesCollisionGroup = game.physics.p2.createCollisionGroup();
     planes = game.add.group();
     rockets = game.add.group();
+    explosions = game.add.group();
+    explosions.createMultiple(30, 'explode');
+    explosions.forEach(setupExplosion, this);
 }
 
 function update()
