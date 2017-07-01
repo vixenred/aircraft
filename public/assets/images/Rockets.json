@@ -1,0 +1,52 @@
+{"frames": [
+
+{
+	"filename": "Rocket1.png",
+	"frame": {"x":1,"y":209,"w":220,"h":47},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":9,"w":220,"h":47},
+	"sourceSize": {"w":256,"h":64}
+},
+{
+	"filename": "Rocket2.png",
+	"frame": {"x":1,"y":107,"w":221,"h":49},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":8,"w":221,"h":49},
+	"sourceSize": {"w":256,"h":64}
+},
+{
+	"filename": "Rocket3.png",
+	"frame": {"x":1,"y":158,"w":221,"h":49},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":8,"w":221,"h":49},
+	"sourceSize": {"w":256,"h":64}
+},
+{
+	"filename": "Rocket4.png",
+	"frame": {"x":1,"y":54,"w":222,"h":51},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":7,"w":222,"h":51},
+	"sourceSize": {"w":256,"h":64}
+},
+{
+	"filename": "Rocket5.png",
+	"frame": {"x":1,"y":1,"w":223,"h":51},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":7,"w":223,"h":51},
+	"sourceSize": {"w":256,"h":64}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Rockets.png",
+	"format": "RGBA8888",
+	"size": {"w":225,"h":257},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:876eb6d65f14d2c821be1f072e83208d:15f2cc098a3d229d13afea68c6725b56:ceccdb9a18ac449064d2e523ee156f14$"
+}
+}

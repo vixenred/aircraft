@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "1",
+	"frame": {"x":1,"y":747,"w":595,"h":362},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":60,"y":109,"w":595,"h":362},
+	"sourceSize": {"w":800,"h":600}
+},
+{
+	"filename": "Boss1",
+	"frame": {"x":1,"y":1,"w":678,"h":432},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":87,"y":91,"w":678,"h":432},
+	"sourceSize": {"w":800,"h":600}
+},
+{
+	"filename": "Boss2",
+	"frame": {"x":1,"y":435,"w":676,"h":310},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":66,"y":141,"w":676,"h":310},
+	"sourceSize": {"w":800,"h":600}
+},
+{
+	"filename": "2",
+	"frame": {"x":1,"y":1111,"w":623,"h":287},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":170,"w":623,"h":287},
+	"sourceSize": {"w":800,"h":600}
+},
+{
+	"filename": "3",
+	"frame": {"x":1,"y":1685,"w":394,"h":322},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":149,"w":394,"h":322},
+	"sourceSize": {"w":800,"h":600}
+},
+{
+	"filename": "4",
+	"frame": {"x":1,"y":1400,"w":673,"h":283},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":46,"y":183,"w":673,"h":283},
+	"sourceSize": {"w":800,"h":600}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Planes.png",
+	"format": "RGBA8888",
+	"size": {"w":680,"h":2008},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:fd1b2f2160fc25ea9f02fcf37a6e14bf:3c38290f06dd65dad34af29e408839c5:8e05370fdc796c88f15006f4ff5654b7$"
+}
+}
