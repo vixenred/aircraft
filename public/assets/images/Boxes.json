@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "Box1.png",
+	"filename": "1",
 	"frame": {"x":1,"y":1,"w":325,"h":435},
 	"rotated": false,
 	"trimmed": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":325,"h":435}
 },
 {
-	"filename": "Box2.png",
+	"filename": "2",
 	"frame": {"x":328,"y":1,"w":325,"h":435},
 	"rotated": false,
 	"trimmed": false,
@@ -17,7 +17,7 @@
 	"sourceSize": {"w":325,"h":435}
 },
 {
-	"filename": "Box3.png",
+	"filename": "3",
 	"frame": {"x":655,"y":1,"w":325,"h":435},
 	"rotated": false,
 	"trimmed": false,
@@ -25,7 +25,7 @@
 	"sourceSize": {"w":325,"h":435}
 },
 {
-	"filename": "Box4.png",
+	"filename": "4",
 	"frame": {"x":982,"y":1,"w":325,"h":435},
 	"rotated": false,
 	"trimmed": false,

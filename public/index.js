@@ -15,8 +15,10 @@ let totalKilled = 0;
 
 const STATE_BATTLE = 1;
 const STATE_BOSS = 2;
+const STATE_BOXES = 3;
 const BOSS_TYPE = 10;
 let state = STATE_BATTLE;
+let boxes = null;
 const BET_INDEX_DEFAULT = 0;
 const BETS = [10, 20, 30, 50, 100];
 const BET_DEFAULT = BETS[BET_INDEX_DEFAULT];
@@ -27,12 +29,13 @@ let bet = BETS[betIndex];
 function preload()
 {
     game.load.image('background', 'assets/images/background.png');
-    game.load.image('turret', 'assets/images/Turret.png');
-    game.load.image('sight', 'assets/images/Sight.png');
-    game.load.atlas('rockets', 'assets/images/Rockets.png', 'assets/images/Rockets.json', null);
-    game.load.atlas('planes', 'assets/images/Planes.png', 'assets/images/Planes.json', null);
-    game.load.image('buttonMinus', 'assets/images/ButtonMinus.png');
-    game.load.image('buttonPlus', 'assets/images/ButtonPlus.png');
+    game.load.image('turret', 'assets/images/turret.png');
+    game.load.image('sight', 'assets/images/sight.png');
+    game.load.atlas('rockets', 'assets/images/rockets.png', 'assets/images/rockets.json', null);
+    game.load.atlas('planes', 'assets/images/planes.png', 'assets/images/planes.json', null);
+    game.load.atlas('boxes', 'assets/images/boxes.png', 'assets/images/boxes.json', null);
+    game.load.image('buttonMinus', 'assets/images/buttonMinus.png');
+    game.load.image('buttonPlus', 'assets/images/buttonPlus.png');
     game.load.spritesheet('explode', 'assets/images/explode.png', 128, 128);
     game.load.bitmapFont('desyrel', 'assets/fonts/desyrel.png', 'assets/fonts/desyrel.xml');
     game.load.physics('planePhysics', 'assets/PlanesPhysics.json');
@@ -77,6 +80,99 @@ function over()
     console.log('button over');
 }
 
+function spawn(planeType, spriteKey)
+{
+
+    let plane = planes.create(game.width * 0.1, game.height * 0.5, 'planes', spriteKey);
+
+    plane.name = game.rnd.uuid();
+    plane.anchor.set(0.5, 0.5);
+    plane.scale.setTo(0.3);
+    game.physics.p2.enable(plane, true);
+    plane.body.clearShapes();
+    plane.body.loadPolygon('planePhysics', spriteKey, 0.3);
+    plane.body.setCollisionGroup(planesCollisionGroup);
+    plane.body.collides(rocketsCollisionGroup);
+
+    const angle = 0;
+    const speed = 250;
+
+    plane.body.rotation = angle;
+    plane.body.dynamic = true;
+    plane.body.collideWorldBounds = false;
+    plane.body.velocity.x = speed * Math.cos(angle);
+    plane.body.velocity.y = speed * Math.sin(angle);
+
+    plane.planeType = planeType;
+
+}
+
+function spawnMobPlane()
+{
+    if (state !== STATE_BATTLE)
+        return;
+    let planeType = game.rnd.between(1, 8);
+    let index = (planeType % 4) + 1;
+
+    spawn(planeType, index.toString());
+}
+
+function spawnBossPlane()
+{
+    if (state !== STATE_BOSS)
+        return;
+    let index = game.rnd.between(1, 2);
+
+    spawn(BOSS_TYPE, 'Boss' + index.toString());
+}
+
+
+
+function spawnBox(spriteKey)
+{
+    const spawnY = 0.2 * game.height;
+    const spawnX = (0.125 + (0.25 * spriteKey)) * game.width;
+    let box = boxes.create(spawnX, spawnY, 'boxes', (spriteKey + 1));
+
+    box.anchor.set(0.5, 0.5);
+    box.scale.setTo(0.3);
+    box.name = spriteKey;
+
+    game.add.tween(box).to( { y: game.height * (0.4 + (spriteKey % 2 === 0 ? 0.1 : 0))}, 3000, 'Linear', true);
+}
+function spawnBoxes()
+{
+    if (state !== STATE_BOXES)
+        return;
+    for (let i = 0; i < 4; i++)
+        spawnBox(i);
+
+}
+
+
+
+function hitPlane(rocketBody, planeBody)
+{
+    rocketBody.sprite.kill();
+    planeBody.sprite.kill();
+    explode(rocketBody.x, rocketBody.y, 0.3);
+    explode(planeBody.x, planeBody.y, 1);
+    totalKilled += 1;
+    if (totalKilled === 2)
+    {
+        state = STATE_BOSS;
+        game.time.events.remove(spawnMobPlane);
+        game.time.events.add(Phaser.Timer.SECOND * 2, spawnBossPlane, this);
+    }
+
+    if (planeBody.sprite.planeType === BOSS_TYPE)
+    {
+        state = STATE_BOXES;
+        game.time.events.add(Phaser.Timer.SECOND * 2, spawnBoxes, this);
+    }
+}
+
+
 function onTap()
 {
 
@@ -101,64 +197,6 @@ function onTap()
     rocket.body.collideWorldBounds = false;
     rocket.body.velocity.x = speed * Math.cos(angle);
     rocket.body.velocity.y = speed * Math.sin(angle);
-}
-
-function spawn(planeType, spriteKey)
-{
-
-    let plane = planes.create(game.width * 0.1, game.height * 0.5, 'planes', spriteKey);
-
-    plane.name = game.rnd.uuid();
-    plane.anchor.set(0.5, 0.5);
-    plane.scale.setTo(0.3);
-    game.physics.p2.enable(plane, true);
-    plane.body.clearShapes();
-    plane.body.loadPolygon('planePhysics', spriteKey, 0.3);
-    plane.body.setCollisionGroup(planesCollisionGroup);
-    plane.body.collides(rocketsCollisionGroup);
-
-    const angle = 0;
-    const speed = 250;
-
-    plane.body.rotation = angle;
-    plane.body.dynamic = true;
-    plane.body.collideWorldBounds = false;
-    plane.body.velocity.x = speed * Math.cos(angle);
-    plane.body.velocity.y = speed * Math.sin(angle);
-}
-
-function spawnMobPlane()
-{
-    if (state !== STATE_BATTLE)
-        return;
-    let planeType = game.rnd.between(1, 8);
-    let index = (planeType % 4) + 1;
-
-    spawn(planeType, index.toString());
-}
-
-function spawnBossPlane()
-{
-    if (state !== STATE_BOSS)
-        return;
-    let index = game.rnd.between(1, 2);
-
-    spawn(BOSS_TYPE, 'Boss' + index.toString());
-}
-
-function hitPlane(rocketBody, planeBody)
-{
-    rocketBody.sprite.kill();
-    planeBody.sprite.kill();
-    explode(rocketBody.x, rocketBody.y, 0.3);
-    explode(planeBody.x, planeBody.y, 1);
-    totalKilled += 1;
-    if (totalKilled === 2)
-    {
-        state = STATE_BOSS;
-        game.time.events.remove(spawnMobPlane);
-        game.time.events.add(Phaser.Timer.SECOND*5, spawnBossPlane, this);
-    }
 }
 
 function create()
@@ -192,9 +230,12 @@ function create()
 
     rocketsCollisionGroup = game.physics.p2.createCollisionGroup();
     planesCollisionGroup = game.physics.p2.createCollisionGroup();
+
     planes = game.add.group();
     rockets = game.add.group();
+    boxes = game.add.group();
     explosions = game.add.group();
+
     explosions.createMultiple(30, 'explode');
     explosions.forEach(setupExplosion, this);
 
